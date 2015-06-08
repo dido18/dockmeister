@@ -8,9 +8,7 @@ command = ARGV.first
 
 case command
 when "compose"
-  config = YAML.load_file('dockyard.yml')
-
-  services = config['services'].inject({}) do |memo, service|
+  services = Dockyard.load_config['services'].inject({}) do |memo, service|
     memo[service] = YAML.load_file("./#{service}/docker-compose.yml")
 
     memo
