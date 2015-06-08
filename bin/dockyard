@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 $:.unshift(File.dirname('../lib'))
 
-require 'lib/dockyard'
+require 'dockyard'
 require 'yaml'
 
 command = ARGV.first
