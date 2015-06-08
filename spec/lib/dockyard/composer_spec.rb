@@ -3,7 +3,9 @@ require 'spec_helper'
 describe Dockyard::Composer do
 
   describe '.compose' do
-    subject { Dockyard::Composer.compose(services) }
+    subject { Dockyard::Composer.new(base_path).compose }
+
+    let(:base_path) { '.' }
 
     let(:foo_configuration) do
       {
@@ -47,25 +49,21 @@ describe Dockyard::Composer do
 
     let(:services) do
       {
-        foo: foo_configuration,
-        bar: bar_configuration
+        'services' => [
+          'foo',
+          'bar'
+        ]
       }
+    end
+
+    before :each do
+      allow(Dockyard).to receive(:load_config) { services }
+      allow(Dockyard::ServiceConfig).to receive(:new).with(base_path, 'foo') { double('Dockyard::ServiceConfig', config: foo_configuration) }
+      allow(Dockyard::ServiceConfig).to receive(:new).with(base_path, 'bar') { double('Dockyard::ServiceConfig', config: bar_configuration) }
     end
 
     it 'concatenates services\' compose configurations' do
       expect(subject.keys).to eq(foo_configuration.keys + bar_configuration.keys)
-    end
-
-    it 'replaces path references for "build" keys' do
-      build_values = subject.map { |service, config| config['build'] }.compact
-
-      expect(build_values).to eq(['./foo/service/', './foo/redis/', './bar/service/'])
-    end
-
-    it 'replaces path references for "volumes" keys' do
-      volumes_values = subject.map { |service, config| config['volumes'] }.compact
-
-      expect(volumes_values).to eq([['./foo/service/foo:/root/worker'], ['./bar/service/bar:/root/worker']])
     end
 
   end

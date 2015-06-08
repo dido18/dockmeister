@@ -7,14 +7,8 @@ require 'yaml'
 command = ARGV.first
 
 case command
-when "compose"
-  services = Dockyard.load_config['services'].inject({}) do |memo, service|
-    memo[service] = YAML.load_file("./#{service}/docker-compose.yml")
-
-    memo
-  end
-
-  composed = Dockyard::Composer.compose(services)
+when 'compose'
+  composed = Dockyard::Composer.new('.').compose
 
   File.open('docker-compose.yml', 'w') { |f| f.write(composed.to_yaml) }
 end
