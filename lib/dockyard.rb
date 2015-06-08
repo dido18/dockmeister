@@ -1,5 +1,6 @@
-require "dockyard/version"
+require_relative "dockyard/version"
+require_relative "dockyard/composer"
 
 module Dockyard
-  # Your code goes here...
+
 end

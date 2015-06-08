@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+$:.unshift(File.dirname('../lib'))
+
+require 'lib/dockyard'
+require 'yaml'
+
+config = YAML.load_file('dockyard.yml')
+
+composed = Dockyard::Composer.compose(config['services'])
+
+File.open('docker-compose.yml', 'w') { |f| f.write(composed.to_yaml) }
