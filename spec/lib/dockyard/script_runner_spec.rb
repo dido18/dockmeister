@@ -2,27 +2,49 @@ require 'spec_helper'
 
 describe Dockyard::ScriptRunner do
 
-  describe '#pre_compose!' do
-    subject { Dockyard::ScriptRunner.new(base_path).pre_compose! }
+  let(:script_runner) { Dockyard::ScriptRunner.new(base_path) }
 
-    let(:base_path) { './spec/fixtures' }
+  let(:base_path) { './spec/fixtures' }
+
+  before :each do
+    allow(Dockyard).to receive(:load_config) { services }
+  end
+
+  describe '#pre_compose!' do
+    subject { script_runner.pre_compose! }
+
     let(:services) do
       {
         'services' => [
           'foo',
-          'bar',
-          'baz'
+          'bar'
         ]
       }
     end
-    let(:script_runner) { instance_double('Dockyard::ScriptRunner') }
 
-    before :each do
-      allow(Dockyard).to receive(:load_config)        { services }
+    it "runs all scripts starting with 'init'" do
+      expect(script_runner).to receive(:run_script).exactly(3).times { true }
+      subject
+    end
+  end
+
+  describe '#run_script' do
+    subject { script_runner.run_script(script) }
+
+    context "for a successfull script" do
+      let(:script) { './foo/scripts/init' }
+
+      it "does not exit" do
+        expect { subject }.to_not raise_error
+      end
     end
 
-    it "runs all scripts matching a 'init*' glob" do
-      expect(subject).to have_received(:run_script).exactly(3).times
+    context "for a broken script" do
+      let(:script) { './broken_service/scripts/init' }
+
+      it "exits" do
+        expect { subject }.to raise_error(SystemExit)
+      end
     end
   end
 
