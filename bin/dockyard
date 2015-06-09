@@ -2,7 +2,6 @@
 $:.unshift(File.dirname('../lib'))
 
 require 'dockyard'
-require 'yaml'
 
 command = ARGV.first
 

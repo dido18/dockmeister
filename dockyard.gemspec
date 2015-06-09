@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "dockyard"
   spec.version       = Dockyard::VERSION
   spec.authors       = ["Bruno Abrantes"]
-  spec.email         = ["bruno@brunoabrantes.com"]
+  spec.email         = ["babrantes@babbel.com"]
   spec.summary       = "Orchestrates several Docker-based applications into one."
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/lessonnine/dockyard.gem"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

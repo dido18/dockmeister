@@ -1,3 +1,5 @@
+require 'yaml'
+
 require_relative 'dockyard/version'
 require_relative 'dockyard/service_config'
 require_relative 'dockyard/composer'
