@@ -7,11 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "dockyard"
   spec.version       = Dockyard::VERSION
   spec.authors       = ["Bruno Abrantes"]
-  spec.email         = ["bruno@brunoabrantes.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.email         = ["babrantes@babbel.com"]
+  spec.summary       = "Orchestrates several Docker-based applications into one."
+  spec.homepage      = "https://github.com/lessonnine/dockyard.gem"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -20,4 +18,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec", "~> 3.2.0"
+  spec.add_development_dependency "pry-byebug"
 end

@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+$:.unshift(File.dirname('../lib'))
+
+require 'dockyard'
+
+command = ARGV.first
+
+case command
+when 'compose'
+  composed = Dockyard::Composer.new('.').compose
+
+  File.open('docker-compose.yml', 'w') { |f| f.write(composed.to_yaml) }
+else
+  puts 'Usage information: '\
+    "dockyard [METHOD] \n\n"\
+    "Available commands\n"\
+    '- compose: Prepares a composition of all the configured services\' "docker-compose.yml" files'
+end
