@@ -15,7 +15,7 @@ module Dockyard
       exit 1
     end
 
-    config = YAML.load_file(file)
+    config = ::YAML.load_file(file)
 
     unless config
       puts 'Invalid dockyard.yml configuration file'

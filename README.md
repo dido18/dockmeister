@@ -17,8 +17,8 @@ services:
 Now, when you run `dockyard compose`, it will string together all of the services' `docker-compose.yml` files into a single `docker-compose.yml` file, adjusting all of the `build` and `volume` paths to be relative to the current directory. You can then start your services all at once like you'd normally do:
 
 ```bash
-docker-compose build
-docker-compose up
+dockyard build
+dockyard up
 ```
 
 ## Contributing
