@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Dockyard::Composer do
 
-  describe '.compose' do
+  describe '#compose' do
     subject { Dockyard::Composer.new(base_path).compose }
 
     let(:base_path) { '.' }
