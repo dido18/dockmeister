@@ -3,6 +3,7 @@ require 'yaml'
 require_relative 'dockyard/version'
 require_relative 'dockyard/service_config'
 require_relative 'dockyard/composer'
+require_relative 'dockyard/script_runner'
 
 module Dockyard
   DOCKYARD_CONFIGURATION_FILE = 'dockyard.yml'
@@ -23,5 +24,9 @@ module Dockyard
     end
 
     config
+  end
+
+  def self.service_names(base_path)
+    load_config(base_path)['services']
   end
 end

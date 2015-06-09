@@ -13,9 +13,13 @@ when 'compose'
 
   File.open('docker-compose.yml', 'w') { |f| f.write(composed.to_yaml) }
 when 'build'
-  exec("#{DOCKER_COMPOSE_CMD} build")
+  #Dockyard::ScriptRunner.new('.').pre_compose!
+
+  #exec("#{DOCKER_COMPOSE_CMD} build")
 when 'up'
   exec("#{DOCKER_COMPOSE_CMD} up")
+
+  #after scripts
 else
   puts 'Usage information: '\
     "dockyard [METHOD] \n\n"\
