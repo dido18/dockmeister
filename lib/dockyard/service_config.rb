@@ -19,12 +19,12 @@ module Dockyard
     def convert(config)
       config.values.each do |value|
         if value['build']
-          value['build'] = service_path(@service, value['build'])
+          value['build'] = adjust_relative_path(@service, value['build'])
         end
 
         if value['volumes']
           value['volumes'] = value['volumes'].map do |volume|
-            service_path(@service, volume)
+            adjust_relative_path(@service, volume)
           end
         end
       end
@@ -32,7 +32,7 @@ module Dockyard
       config
     end
 
-    def service_path(service, path)
+    def adjust_relative_path(service, path)
       path.sub(/^.\//, "./#{service}/")
     end
   end
