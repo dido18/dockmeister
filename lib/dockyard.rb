@@ -12,14 +12,14 @@ module Dockyard
 
     unless File.exists?(file)
       puts 'Missing dockyard.yml configuration file'
-      exit 0
+      exit 1
     end
 
     config = YAML.load_file(file)
 
     unless config
       puts 'Invalid dockyard.yml configuration file'
-      exit 0
+      exit 1
     end
 
     config
