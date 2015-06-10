@@ -25,8 +25,4 @@ module Dockyard
 
     config
   end
-
-  def self.service_names(base_path)
-    load_config(base_path)['services']
-  end
 end
