@@ -4,7 +4,7 @@ describe Dockyard::ScriptRunner do
 
   let(:script_runner) { Dockyard::ScriptRunner.new(base_path) }
 
-  let(:base_path) { './spec/fixtures' }
+  let(:base_path) { File.join('.', 'spec', 'fixtures') }
 
   describe '#pre_build!' do
     before :each do
@@ -23,9 +23,9 @@ describe Dockyard::ScriptRunner do
     end
 
     it "runs all scripts starting with 'init' ordered by filename" do
-      expect(script_runner).to receive(:run_script).once.ordered.with("./foo/scripts/init")
-      expect(script_runner).to receive(:run_script).once.ordered.with("./bar/scripts/init-a.sh")
-      expect(script_runner).to receive(:run_script).once.ordered.with("./bar/scripts/init-b.rb")
+      expect(script_runner).to receive(:run_script).once.ordered.with("./scripts/init")
+      expect(script_runner).to receive(:run_script).once.ordered.with("./scripts/init-a.sh")
+      expect(script_runner).to receive(:run_script).once.ordered.with("./scripts/init-b.rb")
       subject
     end
   end
@@ -35,10 +35,11 @@ describe Dockyard::ScriptRunner do
       allow(STDERR).to receive(:puts)
     end
 
-    subject { script_runner.run_script(script) }
+    subject { script_runner.run_script(File.join(base_path, service, script)) }
 
     context "for a successful script" do
-      let(:script) { './foo/scripts/init' }
+      let(:service) { 'foo' }
+      let(:script) { './scripts/init' }
 
       it "does not exit" do
         expect { subject }.to_not raise_error
@@ -46,7 +47,8 @@ describe Dockyard::ScriptRunner do
     end
 
     context "for a broken script" do
-      let(:script) { './broken_service/scripts/init' }
+      let(:service) { 'broken_service' }
+      let(:script) { './scripts/init' }
 
       it "exits" do
         expect { subject }.to raise_error(SystemExit)
