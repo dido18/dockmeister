@@ -31,6 +31,7 @@ Prepares a composition of each configured services' "docker-compose.yml" file in
 
 Runs pre-build scripts for every service and builds the docker containers using "docker-compose build".
 Pre-build scripts are all scripts starting with "init" in a services' `scripts` directory.
+The scripts will be run from the service folder.
 
 #### up
 
