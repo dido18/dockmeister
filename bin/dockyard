@@ -18,8 +18,6 @@ when 'build'
   exec("#{DOCKER_COMPOSE_CMD} build")
 when 'up'
   exec("#{DOCKER_COMPOSE_CMD} up")
-
-  #after scripts
 else
   puts <<-eos
     USAGE
