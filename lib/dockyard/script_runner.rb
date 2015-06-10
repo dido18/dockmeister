@@ -14,7 +14,7 @@ module Dockyard
       end
     end
 
-    def pre_compose!
+    def pre_build!
       Dir.chdir(@base_path)
       base_dir = Dir.pwd
 

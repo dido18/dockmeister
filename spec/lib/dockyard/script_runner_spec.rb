@@ -10,8 +10,8 @@ describe Dockyard::ScriptRunner do
     allow(Dockyard).to receive(:load_config) { services }
   end
 
-  describe '#pre_compose!' do
-    subject { script_runner.pre_compose! }
+  describe '#pre_build!' do
+    subject { script_runner.pre_build! }
 
     let(:services) do
       {

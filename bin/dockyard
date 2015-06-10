@@ -13,7 +13,7 @@ when 'compose'
 
   File.open('docker-compose.yml', 'w') { |f| f.write(composed.to_yaml) }
 when 'build'
-  Dockyard::ScriptRunner.new('.').pre_compose!
+  Dockyard::ScriptRunner.new('.').pre_build!
 
   exec("#{DOCKER_COMPOSE_CMD} build")
 when 'up'
