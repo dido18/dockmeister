@@ -35,7 +35,7 @@ describe Dockyard::ScriptRunner do
 
     subject { script_runner.run_script(script) }
 
-    context "for a successfull script" do
+    context "for a successful script" do
       let(:script) { './foo/scripts/init' }
 
       it "does not exit" do
