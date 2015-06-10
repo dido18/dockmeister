@@ -7,6 +7,7 @@ describe Dockyard::ScriptRunner do
   let(:base_path) { './spec/fixtures' }
 
   before :each do
+    allow(STDERR).to receive(:puts)
     allow(Dockyard).to receive(:load_config) { services }
   end
 
