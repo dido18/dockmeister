@@ -21,10 +21,17 @@ when 'up'
 
   #after scripts
 else
-  puts 'Usage information: '\
-    "dockyard [METHOD] \n\n"\
-    "Available commands\n"\
-    "- compose: Prepares a composition of all the configured services\' \"docker-compose.yml\" files\n"\
-    "- build: Builds the containers using \"docker-compose build\" \n"\
-    "- up: Starts the containers using \"docker-compose up\" \n"\
+  puts <<-eos
+    USAGE
+      dockyard [COMMAND]
+
+    COMMANDS:
+
+      - compose:  Prepares a composition of each configured services' "docker-compose.yml" file into a single `docker-compose.yml` file.
+
+      - build:    Runs pre-build scripts for every service and builds the docker containers using "docker-compose build".
+                  Pre-build scripts are all scripts starting with "init" in a services' "scripts" directory.
+
+      - up:       Starts the containers using "docker-compose up"
+    eos
 end
