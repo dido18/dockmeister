@@ -6,12 +6,11 @@ describe Dockyard::ScriptRunner do
 
   let(:base_path) { './spec/fixtures' }
 
-  before :each do
-    allow(STDERR).to receive(:puts)
-    allow(Dockyard).to receive(:load_config) { services }
-  end
-
   describe '#pre_build!' do
+    before :each do
+      allow(Dockyard).to receive(:load_config) { services }
+    end
+
     subject { script_runner.pre_build! }
 
     let(:services) do
@@ -30,6 +29,10 @@ describe Dockyard::ScriptRunner do
   end
 
   describe '#run_script' do
+    before :each do
+      allow(STDERR).to receive(:puts)
+    end
+
     subject { script_runner.run_script(script) }
 
     context "for a successfull script" do
