@@ -22,10 +22,22 @@ describe Dockyard::ScriptRunner do
       }
     end
 
+    let(:pre_build_scripts) do
+      {
+        'foo' => [ 'init' ],
+        'bar' => [ 'init-a.sh', 'init-b.rb' ]
+      }
+    end
+
     it "runs all scripts starting with 'init' ordered by filename" do
-      expect(script_runner).to receive(:run_script).once.ordered.with("./scripts/init")
-      expect(script_runner).to receive(:run_script).once.ordered.with("./scripts/init-a.sh")
-      expect(script_runner).to receive(:run_script).once.ordered.with("./scripts/init-b.rb")
+      pre_build_scripts.each do |service_name, script_names|
+        script_names.each do |script_name|
+          script_path = File.expand_path(File.join(base_path, service_name, "scripts", script_name))
+          working_directory = File.expand_path(File.join(base_path, service_name))
+
+          expect(script_runner).to receive(:run_script).once.ordered.with(script_path, working_directory)
+        end
+      end
       subject
     end
   end

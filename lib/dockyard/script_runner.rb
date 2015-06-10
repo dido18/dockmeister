@@ -4,8 +4,8 @@ module Dockyard
       @base_path = File.expand_path(base_path)
     end
 
-    def run_script(script)
-      success = system(script)
+    def run_script(script, working_directory = ".")
+      success = system(script, chdir: working_directory)
 
       unless success
         STDERR.puts <<-eos
@@ -17,16 +17,12 @@ module Dockyard
     end
 
     def pre_build!
-      previous_working_directory = Dir.pwd
-
       Dockyard.load_config(@base_path)['services'].each do |service_name|
-        Dir.chdir(File.join(@base_path, service_name))
-        Dir.glob('./scripts/init*').each do |script|
-          run_script(script)
+        service_directory = File.join(@base_path, service_name)
+        Dir.glob(File.join(service_directory, 'scripts', 'init*')).each do |script|
+          run_script(File.expand_path(script), service_directory)
         end
       end
-    ensure
-      Dir.chdir(previous_working_directory)
     end
   end
 end
