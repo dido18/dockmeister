@@ -5,7 +5,8 @@ Orchestrates several Docker-based applications into one.
 Each service has its own `docker-compose.yml`, in order to bootstrap the required databases, filesystems, app servers, etc. However, a lot of times, you actually want to run a whole set of services, instead of just one. This is where Dockyard comes in.
 
 ## Usage
-Create a `dockyard.yml` file at the root level of where your services reside. This file will contain the names of the several services you wish to bootstrap:
+
+Create a `dockyard.yml` file at the root level of where your services reside. This file will contain the names of all the services you wish to bootstrap:
 
 ```yaml
 services:
@@ -14,12 +15,28 @@ services:
   - baz
 ```
 
-Now, when you run `dockyard compose`, it will string together all of the services' `docker-compose.yml` files into a single `docker-compose.yml` file, adjusting all of the `build` and `volume` paths to be relative to the current directory. You can then start your services all at once like you'd normally do:
+Each service is defined in a sub-directory with the same name that contains a `docker-compose.yml` and optional pre- and post-build scripts in `scripts/`.
+
+### Dockyard commands
 
 ```bash
-docker-compose build
-docker-compose up
+dockyard [COMMAND]
 ```
+
+#### compose
+
+Prepares a composition of each configured services' "docker-compose.yml" file into a single `docker-compose.yml` file, adjusting all of the `build` and `volume` paths to be relative to the current directory.
+
+#### build
+
+Runs pre-build scripts for every service and builds the docker containers using "docker-compose build".
+Pre-build scripts are all scripts starting with "init" in a services' `scripts` directory.
+The scripts will be run from the service folder.
+
+#### up
+
+Starts the containers using "docker-compose up"
+
 
 ## Contributing
 
