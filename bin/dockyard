@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 $:.unshift(File.dirname('../lib'))
 
-require 'dockyard'
+require 'lib/dockyard'
 
 DOCKER_COMPOSE_CMD = 'docker-compose --file ./docker-compose.yml'
 
@@ -15,9 +15,11 @@ when 'compose'
 when 'build'
   Dockyard::ScriptRunner.new('.').pre_build!
 
-  exec("#{DOCKER_COMPOSE_CMD} build")
+  system("#{DOCKER_COMPOSE_CMD} build")
+
+  Dockyard::ScriptRunner.new('.').post_build!
 when 'up'
-  exec("#{DOCKER_COMPOSE_CMD} up")
+  system("#{DOCKER_COMPOSE_CMD} up")
 else
   puts <<-eos
     USAGE
@@ -27,8 +29,8 @@ else
 
       - compose:  Prepares a composition of each configured services' "docker-compose.yml" file into a single `docker-compose.yml` file.
 
-      - build:    Runs pre-build scripts for every service and builds the docker containers using "docker-compose build".
-                  Pre-build scripts are all scripts starting with "init" in a services' "scripts" directory.
+      - build:    Runs pre and post build scripts for every service and builds the docker containers using "docker-compose build".
+                  Build scripts are all scripts starting with "pre" and "post" in a services' "scripts" directory.
 
       - up:       Starts the containers using "docker-compose up"
     eos
