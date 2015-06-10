@@ -22,8 +22,10 @@ describe Dockyard::ScriptRunner do
       }
     end
 
-    it "runs all scripts starting with 'init'" do
-      expect(script_runner).to receive(:run_script).exactly(3).times { true }
+    it "runs all scripts starting with 'init' ordered by filename" do
+      expect(script_runner).to receive(:run_script).once.ordered.with("./foo/scripts/init")
+      expect(script_runner).to receive(:run_script).once.ordered.with("./bar/scripts/init-a.sh")
+      expect(script_runner).to receive(:run_script).once.ordered.with("./bar/scripts/init-b.rb")
       subject
     end
   end

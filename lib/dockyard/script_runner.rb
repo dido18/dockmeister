@@ -1,7 +1,7 @@
 module Dockyard
   class ScriptRunner
     def initialize(base_path)
-      @base_path = File.expand_path(base_path)
+      @base_path = base_path
     end
 
     def run_script(script)
@@ -20,13 +20,9 @@ module Dockyard
       Dir.chdir(@base_path)
 
       Dockyard.load_config(@base_path)['services'].each do |service_name|
-        Dir.chdir(service_name)
-
-        Dir.glob('./scripts/init*').each do |script|
-          success = run_script(script)
+        Dir.glob(File.join('./', service_name, 'scripts', 'init*')).each do |script|
+          run_script(script)
         end
-
-        Dir.chdir(@base_path)
       end
     end
   end
