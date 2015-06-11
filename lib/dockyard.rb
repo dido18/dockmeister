@@ -25,4 +25,27 @@ module Dockyard
 
     config
   end
+
+  def self.compose
+    composed = Dockyard::Composer.new('.').compose
+
+    File.open('docker-compose.yml', 'w') { |f| f.write(composed.to_yaml) }
+  end
+
+  def self.build
+    compose
+
+    Dockyard::ScriptRunner.new('.').pre_build!
+
+    unless Kernel.system("#{DOCKER_COMPOSE_CMD} build")
+      puts 'Failed to build the Docker containers.'
+      exit 1
+    end
+
+    Dockyard::ScriptRunner.new('.').post_build!
+  end
+
+  def self.up
+    Kernel.system("#{DOCKER_COMPOSE_CMD} up")
+  end
 end
