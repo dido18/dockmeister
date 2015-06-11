@@ -15,14 +15,14 @@ when 'compose'
 when 'build'
   Dockyard::ScriptRunner.new('.').pre_build!
 
-  unless system("#{DOCKER_COMPOSE_CMD} build")
+  unless Kernel.system("#{DOCKER_COMPOSE_CMD} build")
     puts 'Failed to build the Docker containers.'
     exit 1
   end
 
   Dockyard::ScriptRunner.new('.').post_build!
 when 'up'
-  system("#{DOCKER_COMPOSE_CMD} up")
+  Kernel.system("#{DOCKER_COMPOSE_CMD} up")
 else
   puts <<-eos
     USAGE

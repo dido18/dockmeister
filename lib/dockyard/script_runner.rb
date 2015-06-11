@@ -1,11 +1,13 @@
 module Dockyard
   class ScriptRunner
+    DOCKYARD_COMPOSE_FILE = 'docker-compose.yml'
+
     def initialize(base_path)
       @base_path = File.expand_path(base_path)
     end
 
     def run_script(script, working_directory = ".")
-      success = system(script, chdir: working_directory)
+      success = Kernel.system(script_env_vars, script, chdir: working_directory)
 
       unless success
         STDERR.puts <<-eos
@@ -24,6 +26,12 @@ module Dockyard
       run_with_prefix('post')
     end
 
+    def script_env_vars
+      {
+        'DOCKYARD_COMPOSE_FILE' => dockyard_compose_file_path
+      }
+    end
+
     private
 
     def run_with_prefix(prefix)
@@ -35,6 +43,10 @@ module Dockyard
           run_script(File.expand_path(script), service_directory)
         end
       end
+    end
+
+    def dockyard_compose_file_path
+      File.join(@base_path, DOCKYARD_COMPOSE_FILE)
     end
   end
 end
