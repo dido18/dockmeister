@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 $:.unshift(File.dirname('../lib'))
 
-require 'lib/dockyard'
+require 'dockyard'
 
 DOCKER_COMPOSE_CMD = 'docker-compose --file ./docker-compose.yml'
 COMMANDS = ['compose', 'build', 'up']
