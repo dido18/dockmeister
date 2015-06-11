@@ -15,9 +15,7 @@ when 'compose'
 when 'build'
   Dockyard::ScriptRunner.new('.').pre_build!
 
-  built = system("#{DOCKER_COMPOSE_CMD} build")
-
-  unless built
+  unless system("#{DOCKER_COMPOSE_CMD} build")
     puts 'Failed to build the Docker containers.'
     exit 1
   end
