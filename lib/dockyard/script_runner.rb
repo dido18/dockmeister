@@ -17,16 +17,18 @@ module Dockyard
     end
 
     def pre_build!
-      run_with_pattern('pre*')
+      run_with_prefix('pre')
     end
 
     def post_build!
-      run_with_pattern('post*')
+      run_with_prefix('post')
     end
 
     private
 
-    def run_with_pattern(pattern)
+    def run_with_prefix(prefix)
+      pattern = "#{prefix}*"
+
       Dockyard.load_config(@base_path)['services'].each do |service_name|
         service_directory = File.join(@base_path, service_name)
         Dir.glob(File.join(service_directory, 'scripts', pattern)).each do |script|
