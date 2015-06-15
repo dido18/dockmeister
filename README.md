@@ -27,6 +27,8 @@ dockmeister [COMMAND]
 
 Prepares a composition of each configured services' "docker-compose.yml" file into a single `docker-compose.yml` file, adjusting all of the `build` and `volume` paths to be relative to the current directory.
 
+If a container in any service has dependencies exposed in its `links`, 'external_links' or 'volumes_from' arrays that are not present in your `dockyard.yml` file, these dependencies will be imported automatically when running `dockyard compose` or `dockyard build`.
+
 #### build
 
 Runs pre-build scripts for every service and builds the docker containers using "docker-compose build".

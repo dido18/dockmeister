@@ -14,6 +14,12 @@ describe Dockmeister::Composer do
           'ports' => [
             '8080'
           ],
+          'links' => [
+            'depservice'
+          ],
+          'external_links' => [
+            'extdepservice'
+          ],
           'volumes' => [
             './service/foo:/root/worker'
           ]
@@ -22,6 +28,9 @@ describe Dockmeister::Composer do
           'build' => './redis/',
           'ports' => [
             '6379:6379'
+          ],
+          'volumes_from' => [
+            'volumesfromdepservice'
           ]
         }
       }
@@ -31,6 +40,9 @@ describe Dockmeister::Composer do
       {
         'barservice' => {
           'build' => './service/',
+          'links' => [
+            'depservice'
+          ],
           'ports' => [
             '8080'
           ],
@@ -43,6 +55,30 @@ describe Dockmeister::Composer do
           'ports' => [
             '6379:6379'
           ]
+        }
+      }
+    end
+
+    let(:dependency_configuration) do
+      {
+        'depservice' => {
+          'image' => 'dep'
+        }
+      }
+    end
+
+    let(:external_dependency_configuration) do
+      {
+        'extdepservice' => {
+          'image' => 'dep'
+        }
+      }
+    end
+
+    let(:volumes_from_dependency_configuration) do
+      {
+        'volumesfromdepservice' => {
+          'image' => 'dep'
         }
       }
     end
@@ -60,10 +96,30 @@ describe Dockmeister::Composer do
       allow(Dockmeister).to receive(:load_config) { services }
       allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'foo') { double('Dockmeister::ServiceConfig', config: foo_configuration) }
       allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'bar') { double('Dockmeister::ServiceConfig', config: bar_configuration) }
+      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'depservice') { double('Dockyard::ServiceConfig', config: dependency_configuration) }
+      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'extdepservice') { double('Dockyard::ServiceConfig', config: external_dependency_configuration) }
+      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'volumesfromdepservice') { double('Dockyard::ServiceConfig', config: volumes_from_dependency_configuration) }
     end
 
     it 'concatenates services\' compose configurations' do
-      expect(subject.keys).to eq(foo_configuration.keys + bar_configuration.keys)
+      expect(subject.keys).to include('fooservice', 'fooredis', 'barservice', 'barredis')
+    end
+
+    it 'inserts dependencies stated in the "links" array' do
+      expect(subject.keys).to include('depservice')
+    end
+
+    it 'inserts dependencies stated in the "external_links" array' do
+      expect(subject.keys).to include('extdepservice')
+    end
+
+    it 'inserts dependencies stated in the "volumes_from" array' do
+      expect(subject.keys).to include('volumesfromdepservice')
+    end
+
+    it 'guarantees unique service configurations' do
+      depservices = subject.keys.select { |service| service == 'depservice' }
+      expect(depservices.count).to eq(1)
     end
 
   end
