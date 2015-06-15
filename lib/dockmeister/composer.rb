@@ -1,7 +1,7 @@
-module Dockyard
+module Dockmeister
   class Composer
     def initialize(base_path)
-      @service_configs = Dockyard.load_config(base_path)['services'].map { |service| ServiceConfig.new(base_path, service).config }
+      @service_configs = Dockmeister.load_config(base_path)['services'].map { |service| ServiceConfig.new(base_path, service).config }
     end
 
     def compose

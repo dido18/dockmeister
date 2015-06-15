@@ -1,4 +1,4 @@
-module Dockyard
+module Dockmeister
   VERSION = File.read(File.expand_path('../../../.version', __FILE__)).strip.freeze
 
   module Version

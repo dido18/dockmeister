@@ -1,2 +1,2 @@
-require 'dockyard'
+require 'dockmeister'
 require 'pry'

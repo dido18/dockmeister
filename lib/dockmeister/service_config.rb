@@ -1,4 +1,4 @@
-module Dockyard
+module Dockmeister
   class ServiceConfig
     DOCKER_COMPOSE_FILENAME = 'docker-compose.yml'
 

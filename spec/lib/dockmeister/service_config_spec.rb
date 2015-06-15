@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Dockyard::ServiceConfig do
+describe Dockmeister::ServiceConfig do
   describe '#config' do
-    subject { Dockyard::ServiceConfig.new(base_path, service).config }
+    subject { Dockmeister::ServiceConfig.new(base_path, service).config }
 
     let(:base_path) { '.' }
     let(:service)   { 'foo' }

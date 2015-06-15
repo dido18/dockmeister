@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Dockyard::ScriptRunner do
+describe Dockmeister::ScriptRunner do
 
-  let(:script_runner) { Dockyard::ScriptRunner.new(base_path) }
+  let(:script_runner) { Dockmeister::ScriptRunner.new(base_path) }
 
   let(:base_path) { File.join('.', 'spec', 'fixtures') }
 
   describe '#pre_build!' do
     before :each do
-      allow(Dockyard).to receive(:load_config) { services }
+      allow(Dockmeister).to receive(:load_config) { services }
     end
 
     subject { script_runner.pre_build! }
@@ -44,7 +44,7 @@ describe Dockyard::ScriptRunner do
 
   describe '#post_build!' do
     before :each do
-      allow(Dockyard).to receive(:load_config) { services }
+      allow(Dockmeister).to receive(:load_config) { services }
     end
 
     subject { script_runner.post_build! }
@@ -108,7 +108,7 @@ describe Dockyard::ScriptRunner do
       let(:script) { './scripts/post' }
       let(:env_vars) do
         {
-          'DOCKYARD_COMPOSE_FILE' => 'docker-compose.yml'
+          'DOCKMEISTER_COMPOSE_FILE' => 'docker-compose.yml'
         }
       end
 

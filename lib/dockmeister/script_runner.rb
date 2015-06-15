@@ -1,6 +1,6 @@
-module Dockyard
+module Dockmeister
   class ScriptRunner
-    DOCKYARD_COMPOSE_FILE = 'docker-compose.yml'
+    DOCKMEISTER_COMPOSE_FILE = 'docker-compose.yml'
 
     def initialize(base_path)
       @base_path = File.expand_path(base_path)
@@ -12,7 +12,7 @@ module Dockyard
       unless success
         STDERR.puts <<-eos
 
-          A dockyard init script failed.
+          A dockmeister init script failed.
         eos
         exit(1)
       end
@@ -28,7 +28,7 @@ module Dockyard
 
     def script_env_vars
       {
-        'DOCKYARD_COMPOSE_FILE' => dockyard_compose_file_path
+        'DOCKMEISTER_COMPOSE_FILE' => dockmeister_compose_file_path
       }
     end
 
@@ -37,7 +37,7 @@ module Dockyard
     def run_with_prefix(prefix)
       pattern = "#{prefix}*"
 
-      Dockyard.load_config(@base_path)['services'].each do |service_name|
+      Dockmeister.load_config(@base_path)['services'].each do |service_name|
         service_directory = File.join(@base_path, service_name)
         Dir.glob(File.join(service_directory, 'scripts', pattern)).each do |script|
           run_script(File.expand_path(script), service_directory)
@@ -45,8 +45,8 @@ module Dockyard
       end
     end
 
-    def dockyard_compose_file_path
-      File.join(@base_path, DOCKYARD_COMPOSE_FILE)
+    def dockmeister_compose_file_path
+      File.join(@base_path, DOCKMEISTER_COMPOSE_FILE)
     end
   end
 end

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Dockyard::Composer do
+describe Dockmeister::Composer do
 
   describe '#compose' do
-    subject { Dockyard::Composer.new(base_path).compose }
+    subject { Dockmeister::Composer.new(base_path).compose }
 
     let(:base_path) { '.' }
 
@@ -57,9 +57,9 @@ describe Dockyard::Composer do
     end
 
     before :each do
-      allow(Dockyard).to receive(:load_config) { services }
-      allow(Dockyard::ServiceConfig).to receive(:new).with(base_path, 'foo') { double('Dockyard::ServiceConfig', config: foo_configuration) }
-      allow(Dockyard::ServiceConfig).to receive(:new).with(base_path, 'bar') { double('Dockyard::ServiceConfig', config: bar_configuration) }
+      allow(Dockmeister).to receive(:load_config) { services }
+      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'foo') { double('Dockmeister::ServiceConfig', config: foo_configuration) }
+      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'bar') { double('Dockmeister::ServiceConfig', config: bar_configuration) }
     end
 
     it 'concatenates services\' compose configurations' do

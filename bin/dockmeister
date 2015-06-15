@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 $:.unshift(File.dirname('../lib'))
 
-require 'dockyard'
+require 'dockmeister'
 
 DOCKER_COMPOSE_CMD = 'docker-compose --file ./docker-compose.yml'
 COMMANDS = ['compose', 'build', 'up']
@@ -9,11 +9,11 @@ COMMANDS = ['compose', 'build', 'up']
 command = ARGV.first
 
 if COMMANDS.include?(command)
-  Dockyard.public_send(command)
+  Dockmeister.public_send(command)
 else
   puts <<-eos
     USAGE
-      dockyard [COMMAND]
+      dockmeister [COMMAND]
 
     COMMANDS:
 
