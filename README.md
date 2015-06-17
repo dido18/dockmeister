@@ -1,3 +1,5 @@
+[![Build Status](https://magnum.travis-ci.com/lessonnine/content.graph.service.svg?token=iwUynGADzEe6seBzYCsF&branch=master)](https://magnum.travis-ci.com/lessonnine/content.graph.service)
+
 # Dockmeister
 
 Orchestrates several `docker-compose`-based services into one.
