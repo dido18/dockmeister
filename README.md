@@ -55,10 +55,13 @@ Pre- and post-build scripts reside in the `scripts/` sub-directory.
 The filenames of the scripts are required to have a `pre` or `post` prefix.
 The scripts will be run from the service folder.
 
+All extra arguments and flags are passed down to the `docker-compose build` command (ie. useful when building with `--no-cache`).
+
 #### up
 
 Starts the containers using `docker-compose up`
 
+All extra arguments and flags are passed down to the `docker-compose up` command.
 
 ## Contributing
 
