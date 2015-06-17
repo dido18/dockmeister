@@ -1,8 +1,10 @@
 # Dockmeister
 
-Orchestrates several Docker-based applications into one.
+Orchestrates several `docker-compose`-based services into one.
 
-Each service has its own `docker-compose.yml`, in order to bootstrap the required databases, filesystems, app servers, etc. However, a lot of times, you actually want to run a whole set of services, instead of just one. This is where Dockmeister comes in.
+Dockmeister will facilitate the integration of several `docker-compose`-based services by concatenating their `docker-compose.yml` configurations into one.
+
+In addition, Dockmeister allows you to specify scripts that are executed before or after building a particular service, which can be used for steps such as seeding a database.
 
 ## Usage
 
@@ -15,7 +17,21 @@ services:
   - baz
 ```
 
-Each service is defined in a sub-directory with the same name that contains a `docker-compose.yml` and optional pre- and post-build scripts in `scripts/`.
+A service is defined by a directory that contains a `docker-compose.yml` specifying its dependencies. Pre- and post-build scripts reside in the `scripts/` sub-directory.
+
+```
+  foo/
+    docker-compose.yml
+    appserver/
+      Dockerfile
+    database/
+      Dockerfile
+    filesystem/
+      Dockerfile
+    scripts/
+      pre_do_something.sh
+      post_seed_the_database.rb
+```
 
 ### Dockmeister commands
 
@@ -25,17 +41,23 @@ dockmeister [COMMAND]
 
 #### compose
 
-Prepares a composition of each configured services' "docker-compose.yml" file into a single `docker-compose.yml` file, adjusting all of the `build` and `volume` paths to be relative to the current directory.
+Prepares a composition of each services' `docker-compose.yml` file into a single `docker-compose.yml` file. All `build` and `volume` paths are adjusted to be relative to the root directory.
 
 #### build
 
-Runs pre-build scripts for every service and builds the docker containers using "docker-compose build".
-Pre-build scripts are all scripts starting with "init" in a services' `scripts` directory.
+For each service:
+
+- Runs the pre-build scripts
+- Builds the docker containers using `docker-compose build`.
+- Runs the post-build scripts
+
+Pre- and post-build scripts reside in the `scripts/` sub-directory.
+The filenames of the scripts are required to have a `pre` or `post` prefix.
 The scripts will be run from the service folder.
 
 #### up
 
-Starts the containers using "docker-compose up"
+Starts the containers using `docker-compose up`
 
 
 ## Contributing

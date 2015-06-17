@@ -17,11 +17,24 @@ else
 
     COMMANDS:
 
-      - compose:  Prepares a composition of each configured services' "docker-compose.yml" file into a single `docker-compose.yml` file.
+    #### compose
 
-      - build:    Runs pre and post build scripts for every service and builds the docker containers using "docker-compose build".
-                  Build scripts are all scripts starting with "pre" and "post" in a services' "scripts" directory.
+    Prepares a composition of each services' `docker-compose.yml` file into a single `docker-compose.yml` file. All `build` and `volume` paths are adjusted to be relative to the root directory.
 
-      - up:       Starts the containers using "docker-compose up"
+    #### build
+
+    For each service:
+
+    - Runs the pre-build scripts
+    - Builds the docker containers using `docker-compose build`.
+    - Runs the post-build scripts
+
+    Pre- and post-build scripts reside in the `scripts/` sub-directory.
+    The filenames of the scripts are required to have a `pre` or `post` prefix.
+    The scripts will be run from the service folder.
+
+    #### up
+
+    Starts the containers using `docker-compose up`
     eos
 end
