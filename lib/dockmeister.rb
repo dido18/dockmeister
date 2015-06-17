@@ -27,6 +27,11 @@ module Dockmeister
     config
   end
 
+  def self.compose(*options)
+    composed = Dockmeister::Composer.new('.').compose
+    File.open('docker-compose.yml', 'w') { |f| f.write(composed.to_yaml) }
+  end
+
   def self.build(*options)
     compose
 
