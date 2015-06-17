@@ -26,18 +26,12 @@ module Dockmeister
     config
   end
 
-  def self.compose
-    composed = Dockmeister::Composer.new('.').compose
-
-    File.open('docker-compose.yml', 'w') { |f| f.write(composed.to_yaml) }
-  end
-
-  def self.build
+  def self.build(*options)
     compose
 
     Dockmeister::ScriptRunner.new('.').pre_build!
 
-    unless Kernel.system("#{DOCKER_COMPOSE_CMD} build")
+    unless Kernel.system(command_with_options('build', options))
       puts 'Failed to build the Docker containers.'
       exit 1
     end
@@ -45,7 +39,13 @@ module Dockmeister
     Dockmeister::ScriptRunner.new('.').post_build!
   end
 
-  def self.up
-    Kernel.system("#{DOCKER_COMPOSE_CMD} up")
+  def self.up(*options)
+    Kernel.system(command_with_options('up', options))
+  end
+
+  private
+
+  def self.command_with_options(command, options)
+    "#{DOCKER_COMPOSE_CMD} #{command} " + options.join(' ')
   end
 end
