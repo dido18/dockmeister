@@ -6,8 +6,8 @@ describe Dockmeister do
 
     subject { Dockmeister.build(options) }
 
-    let(:options)       { ['--no-cache', '--some-other-flag'] }
     let(:script_runner) { double('Dockmeister::ScriptRunner') }
+    let(:options) { [] }
 
     before :each do
       allow(Dockmeister::ScriptRunner).to receive(:new) { script_runner }
@@ -23,11 +23,26 @@ describe Dockmeister do
       subject
     end
 
-    it 'runs "docker-compose build" with options' do
-      command = "#{Dockmeister::DOCKER_COMPOSE_CMD} build #{options.join(' ')}"
-      expect(Kernel).to receive(:system).with(command) { true }
+    context 'when options are passed' do
+      let(:options) { ['--no-cache', '--some-other-flag'] }
 
-      subject
+      it 'runs "docker-compose build" with options' do
+        command = "#{Dockmeister::DOCKER_COMPOSE_CMD} build #{options.join(' ')}"
+        expect(Kernel).to receive(:system).with(command) { true }
+
+        subject
+      end
+    end
+
+    context 'when options are nil' do
+      let(:options) { nil }
+
+      it 'runs "docker-compose build"' do
+        command = "#{Dockmeister::DOCKER_COMPOSE_CMD} build"
+        expect(Kernel).to receive(:system).with(command) { true }
+
+        subject
+      end
     end
 
   end
@@ -36,13 +51,26 @@ describe Dockmeister do
 
     subject { Dockmeister.up(options) }
 
-    let(:options)       { ['--no-cache', '--some-other-flag'] }
+    context 'when options are passed' do
+      let(:options) { ['--no-cache', '--some-other-flag'] }
 
-    it 'runs "docker-compose up" with options' do
-      command = "#{Dockmeister::DOCKER_COMPOSE_CMD} up #{options.join(' ')}"
-      expect(Kernel).to receive(:system).with(command) { true }
+      it 'runs "docker-compose up" with options' do
+        command = "#{Dockmeister::DOCKER_COMPOSE_CMD} up #{options.join(' ')}"
+        expect(Kernel).to receive(:system).with(command) { true }
 
-      subject
+        subject
+      end
+    end
+
+    context 'when options are nil' do
+      let(:options) { nil }
+
+      it 'runs "docker-compose up"' do
+        command = "#{Dockmeister::DOCKER_COMPOSE_CMD} up"
+        expect(Kernel).to receive(:system).with(command) { true }
+
+        subject
+      end
     end
 
   end
