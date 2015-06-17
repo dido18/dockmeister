@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dockmeister (0.0.20150611134335)
+    dockmeister (0.0.20150615152532)
 
 GEM
   remote: https://rubygems.org/
