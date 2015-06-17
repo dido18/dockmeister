@@ -52,6 +52,6 @@ module Dockmeister
   private
 
   def self.command_with_options(command, options)
-    "#{DOCKER_COMPOSE_CMD} #{command} " + options.join(' ')
+    "#{DOCKER_COMPOSE_CMD} #{command} #{options.join(' ')}"
   end
 end
