@@ -1,11 +1,7 @@
 PATH
   remote: .
   specs:
-<<<<<<< HEAD
     dockmeister (0.0.20150615152532)
-=======
-    dockyard (0.0.20150611134335)
->>>>>>> Passes CLI arguments to docker-compose build|up
 
 GEM
   remote: https://rubygems.org/

@@ -3,7 +3,6 @@ $:.unshift(File.dirname('../lib'))
 
 require 'dockmeister'
 
-DOCKER_COMPOSE_CMD = 'docker-compose --file ./docker-compose.yml'
 COMMANDS = ['compose', 'build', 'up']
 
 command = ARGV.first

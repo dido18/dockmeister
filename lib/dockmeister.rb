@@ -7,6 +7,7 @@ require_relative 'dockmeister/script_runner'
 
 module Dockmeister
   DOCKMEISTER_CONFIGURATION_FILE = 'dockmeister.yml'
+  DOCKER_COMPOSE_CMD = 'docker-compose --file ./docker-compose.yml'
 
   def self.load_config(base_path)
     file = File.join(base_path, DOCKMEISTER_CONFIGURATION_FILE)
