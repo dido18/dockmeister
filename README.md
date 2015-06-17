@@ -45,11 +45,9 @@ Prepares a composition of each services' `docker-compose.yml` file into a single
 
 #### build
 
-For each service:
-
-- Runs the pre-build scripts
-- Builds the docker containers using `docker-compose build`.
-- Runs the post-build scripts
+- Runs the pre-build scripts for each service
+- Builds all docker containers using `docker-compose build`.
+- Runs the post-build scripts for each service
 
 Pre- and post-build scripts reside in the `scripts/` sub-directory.
 The filenames of the scripts are required to have a `pre` or `post` prefix.
