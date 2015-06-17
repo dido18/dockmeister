@@ -2,6 +2,33 @@ require 'spec_helper'
 
 describe Dockmeister do
 
+  describe '.compose' do
+
+    subject { Dockmeister.compose(nil) }
+
+    let(:base_path)       { File.join('.', 'spec', 'fixtures') }
+    let(:file_path)       { File.join(base_path, 'docker-compose.yml') }
+    let(:composer_double) { double('Dockmeister::Composer') }
+    let(:composition)     { {foo: 'bar'} }
+
+    before :each do
+      allow(Dockmeister).to receive(:base_path) { base_path }
+      allow(Dockmeister::Composer).to receive(:new) { composer_double }
+      allow(composer_double).to receive(:compose) { composition }
+    end
+
+    after :each do
+      File.delete(file_path)
+    end
+
+    it 'writes a "docker-compose.yml" file with the yaml version of the return from Dockmeister::Composer#compose' do
+      subject
+
+      expect(YAML.load_file(file_path)).to eq(composition)
+    end
+
+  end
+
   describe '.build' do
 
     subject { Dockmeister.build(options) }
@@ -27,7 +54,7 @@ describe Dockmeister do
       let(:options) { ['--no-cache', '--some-other-flag'] }
 
       it 'runs "docker-compose build" with options' do
-        command = "#{Dockmeister::DOCKER_COMPOSE_CMD} build #{options.join(' ')}"
+        command = "#{Dockmeister::compose_command} build #{options.join(' ')}"
         expect(Kernel).to receive(:system).with(command) { true }
 
         subject
@@ -38,7 +65,7 @@ describe Dockmeister do
       let(:options) { nil }
 
       it 'runs "docker-compose build"' do
-        command = "#{Dockmeister::DOCKER_COMPOSE_CMD} build"
+        command = "#{Dockmeister::compose_command} build"
         expect(Kernel).to receive(:system).with(command) { true }
 
         subject
@@ -55,7 +82,7 @@ describe Dockmeister do
       let(:options) { ['--no-cache', '--some-other-flag'] }
 
       it 'runs "docker-compose up" with options' do
-        command = "#{Dockmeister::DOCKER_COMPOSE_CMD} up #{options.join(' ')}"
+        command = "#{Dockmeister::compose_command} up #{options.join(' ')}"
         expect(Kernel).to receive(:system).with(command) { true }
 
         subject
@@ -66,7 +93,7 @@ describe Dockmeister do
       let(:options) { nil }
 
       it 'runs "docker-compose up"' do
-        command = "#{Dockmeister::DOCKER_COMPOSE_CMD} up"
+        command = "#{Dockmeister::compose_command} up"
         expect(Kernel).to receive(:system).with(command) { true }
 
         subject
