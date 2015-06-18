@@ -33,7 +33,7 @@ module Dockmeister
     end
 
     def adjust_relative_path(service, path)
-      path.sub(/^.\//, "./#{service}/")
+      path.sub(/^\.\//, "./#{service}/")
     end
   end
 end
