@@ -44,3 +44,6 @@ DEPENDENCIES
   pry-byebug
   rake (~> 10.0)
   rspec (~> 3.2.0)
+
+BUNDLED WITH
+   1.10.4

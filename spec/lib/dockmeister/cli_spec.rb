@@ -1,19 +1,19 @@
 require 'spec_helper'
 
-describe Dockmeister do
+describe Dockmeister::CLI do
+  let(:base_path) { File.join('.', 'spec', 'fixtures') }
+  let(:cli) { Dockmeister::CLI.new(base_path) }
 
-  describe '.compose' do
+  describe '#compose' do
+    subject { cli.compose(nil) }
 
-    subject { Dockmeister.compose(nil) }
-
-    let(:base_path)       { File.join('.', 'spec', 'fixtures') }
     let(:file_path)       { File.join(base_path, 'docker-compose.yml') }
     let(:composer_double) { double('Dockmeister::Composer') }
     let(:composition)     { {foo: 'bar'} }
 
     before :each do
-      allow(Dockmeister).to receive(:base_path) { base_path }
       allow(Dockmeister::Composer).to receive(:new) { composer_double }
+      allow(cli).to receive(:load_config) { { services: [] } }
       allow(composer_double).to receive(:compose) { composition }
     end
 
@@ -29,9 +29,9 @@ describe Dockmeister do
 
   end
 
-  describe '.build' do
+  describe '#build' do
 
-    subject { Dockmeister.build(options) }
+    subject { cli.build(options) }
 
     let(:script_runner) { double('Dockmeister::ScriptRunner') }
     let(:options) { [] }
@@ -40,12 +40,13 @@ describe Dockmeister do
       allow(Dockmeister::ScriptRunner).to receive(:new) { script_runner }
       allow(script_runner).to receive(:pre_build!)
       allow(script_runner).to receive(:post_build!)
-      allow(Dockmeister).to receive(:compose)
+      allow(cli).to receive(:compose)
+      allow(cli).to receive(:load_config) { { services: [] } }
       allow(Kernel).to receive(:system) { true }
     end
 
-    it 'runs .compose' do
-      expect(Dockmeister).to receive(:compose)
+    it 'runs #compose' do
+      expect(cli).to receive(:compose)
 
       subject
     end
@@ -54,7 +55,7 @@ describe Dockmeister do
       let(:options) { ['--no-cache', '--some-other-flag'] }
 
       it 'runs "docker-compose build" with options' do
-        command = "#{Dockmeister::compose_command} build #{options.join(' ')}"
+        command = "#{cli.compose_command} build #{options.join(' ')}"
         expect(Kernel).to receive(:system).with(command) { true }
 
         subject
@@ -65,7 +66,7 @@ describe Dockmeister do
       let(:options) { nil }
 
       it 'runs "docker-compose build"' do
-        command = "#{Dockmeister::compose_command} build"
+        command = "#{cli.compose_command} build"
         expect(Kernel).to receive(:system).with(command) { true }
 
         subject
@@ -74,9 +75,8 @@ describe Dockmeister do
 
   end
 
-  describe '.up' do
-
-    subject { Dockmeister.up(options) }
+  describe '#up' do
+    subject { cli.up(options) }
 
     before :each do
       allow(Kernel).to receive(:exec) { true }
@@ -86,7 +86,7 @@ describe Dockmeister do
       let(:options) { ['--no-cache', '--some-other-flag'] }
 
       it 'runs "docker-compose up" with options' do
-        command = "#{Dockmeister::compose_command} up #{options.join(' ')}"
+        command = "#{cli.compose_command} up #{options.join(' ')}"
         expect(Kernel).to receive(:exec).with(command) { true }
 
         subject
@@ -97,7 +97,7 @@ describe Dockmeister do
       let(:options) { nil }
 
       it 'runs "docker-compose up"' do
-        command = "#{Dockmeister::compose_command} up"
+        command = "#{cli.compose_command} up"
         expect(Kernel).to receive(:exec).with(command) { true }
 
         subject
