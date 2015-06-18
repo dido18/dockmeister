@@ -46,7 +46,7 @@ module Dockmeister
   end
 
   def self.up(*options)
-    Kernel.system(command_with_options('up', options))
+    Kernel.exec(command_with_options('up', options))
   end
 
   def self.base_path

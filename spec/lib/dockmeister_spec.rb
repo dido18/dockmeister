@@ -78,12 +78,16 @@ describe Dockmeister do
 
     subject { Dockmeister.up(options) }
 
+    before :each do
+      allow(Kernel).to receive(:exec) { true }
+    end
+
     context 'when options are passed' do
       let(:options) { ['--no-cache', '--some-other-flag'] }
 
       it 'runs "docker-compose up" with options' do
         command = "#{Dockmeister::compose_command} up #{options.join(' ')}"
-        expect(Kernel).to receive(:system).with(command) { true }
+        expect(Kernel).to receive(:exec).with(command) { true }
 
         subject
       end
@@ -94,7 +98,7 @@ describe Dockmeister do
 
       it 'runs "docker-compose up"' do
         command = "#{Dockmeister::compose_command} up"
-        expect(Kernel).to receive(:system).with(command) { true }
+        expect(Kernel).to receive(:exec).with(command) { true }
 
         subject
       end
