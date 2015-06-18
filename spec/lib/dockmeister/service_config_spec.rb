@@ -45,8 +45,8 @@ describe Dockmeister::ServiceConfig do
 
     it 'does not replace paths that do not start with "."' do
       ignored_volumes = subject.flat_map { |service, config| config['volumes'] }
-      .compact
-      .select { |volume| volume.chars.first != "." }
+        .compact
+        .select { |volume| volume.chars.first != "." }
 
       expect(ignored_volumes.size).to eq(1)
     end
