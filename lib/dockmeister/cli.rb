@@ -27,7 +27,7 @@ module Dockmeister
     end
 
     def up(*options)
-      Kernel.system(command_with_options('up', options))
+      Kernel.exec(command_with_options('up', options))
     end
 
     def compose_command
