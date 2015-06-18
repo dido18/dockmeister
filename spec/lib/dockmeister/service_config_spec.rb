@@ -14,7 +14,8 @@ describe Dockmeister::ServiceConfig do
             '8080'
           ],
           'volumes' => [
-            './service/foo:/root/worker'
+            './service/foo:/root/worker',
+            '~/service/foo:/root/worker'
           ]
         },
         'fooredis' => {
@@ -39,7 +40,15 @@ describe Dockmeister::ServiceConfig do
     it 'replaces path references for "volumes" keys' do
       volumes_values = subject.map { |service, config| config['volumes'] }.compact
 
-      expect(volumes_values).to eq([['./foo/service/foo:/root/worker']])
+      expect(volumes_values).to eq([['./foo/service/foo:/root/worker', '~/service/foo:/root/worker']])
+    end
+
+    it 'does not replace paths that do not start with "."' do
+      ignored_volumes = subject.flat_map { |service, config| config['volumes'] }
+        .compact
+        .select { |volume| volume.chars.first != "." }
+
+      expect(ignored_volumes.size).to eq(1)
     end
   end
 end
