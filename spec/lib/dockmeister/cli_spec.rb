@@ -109,4 +109,13 @@ describe Dockmeister::Cli do
 
   end
 
+  describe '#compose_command' do
+    subject { cli.compose_command }
+
+    let(:compose_file_path) { File.join(base_path, Dockmeister::Cli::DOCKER_COMPOSE_FILENAME) }
+    let(:command) { "docker-compose --file #{compose_file_path}" }
+
+    it { is_expected.to eq(command) }
+  end
+
 end
