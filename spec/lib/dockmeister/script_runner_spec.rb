@@ -2,25 +2,12 @@ require 'spec_helper'
 
 describe Dockmeister::ScriptRunner do
 
-  let(:script_runner) { Dockmeister::ScriptRunner.new(base_path) }
-
-  let(:base_path) { File.join('.', 'spec', 'fixtures') }
-
+  let(:script_runner) { Dockmeister::ScriptRunner.new(base_path, services) }
+  let(:base_path)     { File.join('.', 'spec', 'fixtures') }
+  let(:services)      { ['foo', 'bar'] }
+    
   describe '#pre_build!' do
-    before :each do
-      allow(Dockmeister).to receive(:load_config) { services }
-    end
-
     subject { script_runner.pre_build! }
-
-    let(:services) do
-      {
-        'services' => [
-          'foo',
-          'bar'
-        ]
-      }
-    end
 
     let(:pre_build_scripts) do
       {
@@ -43,20 +30,7 @@ describe Dockmeister::ScriptRunner do
   end
 
   describe '#post_build!' do
-    before :each do
-      allow(Dockmeister).to receive(:load_config) { services }
-    end
-
     subject { script_runner.post_build! }
-
-    let(:services) do
-      {
-        'services' => [
-          'foo',
-          'bar'
-        ]
-      }
-    end
 
     let(:post_build_scripts) do
       {

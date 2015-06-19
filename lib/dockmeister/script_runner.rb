@@ -2,8 +2,9 @@ module Dockmeister
   class ScriptRunner
     DOCKMEISTER_COMPOSE_FILE = 'docker-compose.yml'
 
-    def initialize(base_path)
+    def initialize(base_path, services)
       @base_path = File.expand_path(base_path)
+      @services = services
     end
 
     def run_script(script, working_directory = ".")
@@ -37,7 +38,7 @@ module Dockmeister
     def run_with_prefix(prefix)
       pattern = "#{prefix}*"
 
-      Dockmeister.load_config(@base_path)['services'].each do |service_name|
+      @services.each do |service_name|
         service_directory = File.join(@base_path, service_name)
         Dir.glob(File.join(service_directory, 'scripts', pattern)).each do |script|
           run_script(File.expand_path(script), service_directory)

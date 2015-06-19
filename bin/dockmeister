@@ -9,7 +9,7 @@ command = ARGV.first
 options = ARGV.slice(1..-1)
 
 if COMMANDS.include?(command)
-  Dockmeister.public_send(command, options)
+  Dockmeister::Cli.new('.').public_send(command, options)
 else
   puts <<-eos
     USAGE
