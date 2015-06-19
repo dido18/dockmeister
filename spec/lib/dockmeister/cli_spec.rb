@@ -13,7 +13,7 @@ describe Dockmeister::Cli do
 
     let(:file_path)       { File.join(base_path, 'docker-compose.yml') }
     let(:composer_double) { double('Dockmeister::Composer') }
-    let(:composition)     { {foo: 'bar'} }
+    let(:composition)     { { foo: 'bar' } }
 
     before :each do
       allow(Dockmeister::Composer).to receive(:new) { composer_double }
