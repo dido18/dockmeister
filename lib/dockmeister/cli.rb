@@ -1,5 +1,5 @@
 module Dockmeister
-  class CLI
+  class Cli
 
     DOCKMEISTER_CONFIGURATION_FILE = 'dockmeister.yml'
     DOCKER_COMPOSE_FILENAME = 'docker-compose.yml'

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Dockmeister::CLI do
+describe Dockmeister::Cli do
   let(:base_path) { File.join('.', 'spec', 'fixtures') }
-  let(:cli) { Dockmeister::CLI.new(base_path) }
+  let(:cli) { Dockmeister::Cli.new(base_path) }
 
   describe '#compose' do
     subject { cli.compose(nil) }
