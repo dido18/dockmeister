@@ -4,6 +4,10 @@ describe Dockmeister::Cli do
   let(:base_path) { File.join('.', 'spec', 'fixtures') }
   let(:cli) { Dockmeister::Cli.new(base_path) }
 
+  before :each do
+    allow_any_instance_of(Dockmeister::Cli).to receive(:load_config) { { services: [] } }
+  end
+
   describe '#compose' do
     subject { cli.compose(nil) }
 
@@ -13,7 +17,6 @@ describe Dockmeister::Cli do
 
     before :each do
       allow(Dockmeister::Composer).to receive(:new) { composer_double }
-      allow(cli).to receive(:load_config) { { services: [] } }
       allow(composer_double).to receive(:compose) { composition }
     end
 

@@ -6,24 +6,25 @@ module Dockmeister
 
     def initialize(base_path)
       @base_path = base_path
+      @services = load_config['services']
     end
 
     def compose(*options)
-      composed = Dockmeister::Composer.new(@base_path, load_config['services']).compose
+      composed = Dockmeister::Composer.new(@base_path, @services).compose
       File.open(compose_file_path, 'w') { |f| f.write(composed.to_yaml) }
     end
 
     def build(*options)
       compose
 
-      Dockmeister::ScriptRunner.new(@base_path, load_config['services']).pre_build!
+      Dockmeister::ScriptRunner.new(@base_path, @services).pre_build!
 
       unless Kernel.system(command_with_options('build', options))
         puts 'Failed to build the Docker containers.'
         exit 1
       end
 
-      Dockmeister::ScriptRunner.new(@base_path, load_config['services']).post_build!
+      Dockmeister::ScriptRunner.new(@base_path, @services).post_build!
     end
 
     def up(*options)
