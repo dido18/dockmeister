@@ -7,6 +7,7 @@ module Dockmeister
     end
 
     def run_script(script, working_directory = ".")
+      puts "Running #{script}"
       success = Kernel.system(script_env_vars, script, chdir: working_directory)
 
       unless success
