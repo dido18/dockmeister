@@ -1,7 +1,5 @@
 module Dockmeister
 
-  VERSION = ::Dockmeister::Version::STRING
-
   module Version
 
     MAJOR = 0
@@ -11,5 +9,7 @@ module Dockmeister
     STRING = [MAJOR, MINOR, TINY].join('.')
 
   end
+
+  VERSION = ::Dockmeister::Version::STRING
 
 end
