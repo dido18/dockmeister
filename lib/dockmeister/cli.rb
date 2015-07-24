@@ -1,4 +1,5 @@
 module Dockmeister
+
   class Cli
 
     DOCKMEISTER_CONFIGURATION_FILE = 'dockmeister.yml'
@@ -37,31 +38,31 @@ module Dockmeister
 
     private
 
-    def compose_file_path
-      File.join(@base_path, DOCKER_COMPOSE_FILENAME)
-    end
-
-    def command_with_options(command, options)
-      "#{compose_command} #{command} #{options.join(' ')}".strip
-    end
-
-    def load_config
-      file = File.join(@base_path, DOCKMEISTER_CONFIGURATION_FILE)
-
-      unless File.exists?(file)
-        puts 'Missing dockmeister.yml configuration file'
-        exit 1
+      def compose_file_path
+        File.join(@base_path, DOCKER_COMPOSE_FILENAME)
       end
 
-      config = ::YAML.load_file(file)
-
-      unless config
-        puts 'Invalid dockmeister.yml configuration file'
-        exit 1
+      def command_with_options(command, options)
+        "#{compose_command} #{command} #{options.join(' ')}".strip
       end
 
-      config
-    end
+      def load_config
+        file = File.join(@base_path, DOCKMEISTER_CONFIGURATION_FILE)
+
+        unless File.exists?(file)
+          puts 'Missing dockmeister.yml configuration file'
+          exit 1
+        end
+
+        config = ::YAML.load_file(file)
+
+        unless config
+          puts 'Invalid dockmeister.yml configuration file'
+          exit 1
+        end
+
+        config
+      end
 
   end
 

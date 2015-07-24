@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe Dockmeister::ServiceConfig do
+
   describe '#config' do
+
     subject { Dockmeister::ServiceConfig.new(base_path, service).config }
 
     let(:base_path) { '.' }
@@ -50,5 +52,7 @@ describe Dockmeister::ServiceConfig do
 
       expect(ignored_volumes.size).to eq(1)
     end
+
   end
+
 end

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Dockmeister::Composer do
 
   describe '#compose' do
+
     subject { Dockmeister::Composer.new(base_path, services).compose }
 
     let(:base_path) { '.' }
@@ -47,16 +48,15 @@ describe Dockmeister::Composer do
       }
     end
 
-    let(:services) do
-      [
-        'foo',
-        'bar'
-      ]
-    end
+    let(:services) { ['foo', 'bar'] }
 
     before :each do
-      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'foo') { double('Dockmeister::ServiceConfig', config: foo_configuration) }
-      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'bar') { double('Dockmeister::ServiceConfig', config: bar_configuration) }
+      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'foo') {
+        double('Dockmeister::ServiceConfig', config: foo_configuration)
+      }
+      allow(Dockmeister::ServiceConfig).to receive(:new).with(base_path, 'bar') {
+        double('Dockmeister::ServiceConfig', config: bar_configuration)
+      }
     end
 
     it 'concatenates services\' compose configurations' do

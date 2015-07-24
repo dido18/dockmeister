@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Dockmeister::Cli do
+
   let(:base_path) { File.join('.', 'spec', 'fixtures') }
   let(:cli) { Dockmeister::Cli.new(base_path) }
 
@@ -9,6 +10,7 @@ describe Dockmeister::Cli do
   end
 
   describe '#compose' do
+
     subject { cli.compose(nil) }
 
     let(:file_path)       { File.join(base_path, 'docker-compose.yml') }
@@ -26,7 +28,6 @@ describe Dockmeister::Cli do
 
     it 'writes a "docker-compose.yml" file with the yaml version of the return from Dockmeister::Composer#compose' do
       subject
-
       expect(YAML.load_file(file_path)).to eq(composition)
     end
 
@@ -50,35 +51,37 @@ describe Dockmeister::Cli do
 
     it 'runs #compose' do
       expect(cli).to receive(:compose)
-
       subject
     end
 
     context 'when options are passed' do
+
       let(:options) { ['--no-cache', '--some-other-flag'] }
 
       it 'runs "docker-compose build" with options' do
         command = "#{cli.compose_command} build #{options.join(' ')}"
         expect(Kernel).to receive(:system).with(command) { true }
-
         subject
       end
+
     end
 
     context 'when options are nil' do
+
       let(:options) { nil }
 
       it 'runs "docker-compose build"' do
         command = "#{cli.compose_command} build"
         expect(Kernel).to receive(:system).with(command) { true }
-
         subject
       end
+
     end
 
   end
 
   describe '#up' do
+
     subject { cli.up(options) }
 
     before :each do
@@ -86,36 +89,40 @@ describe Dockmeister::Cli do
     end
 
     context 'when options are passed' do
+
       let(:options) { ['--no-cache', '--some-other-flag'] }
 
       it 'runs "docker-compose up" with options' do
         command = "#{cli.compose_command} up #{options.join(' ')}"
         expect(Kernel).to receive(:exec).with(command) { true }
-
         subject
       end
+
     end
 
     context 'when options are nil' do
+
       let(:options) { nil }
 
       it 'runs "docker-compose up"' do
         command = "#{cli.compose_command} up"
         expect(Kernel).to receive(:exec).with(command) { true }
-
         subject
       end
+
     end
 
   end
 
   describe '#compose_command' do
+
     subject { cli.compose_command }
 
     let(:compose_file_path) { File.join(base_path, Dockmeister::Cli::DOCKER_COMPOSE_FILENAME) }
     let(:command) { "docker-compose --file #{compose_file_path}" }
 
     it { is_expected.to eq(command) }
+
   end
 
 end
