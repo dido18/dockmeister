@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
   spec.name          = "dockmeister"
   spec.version       = Dockmeister::VERSION
   spec.license       = "MIT"
-  spec.authors       = ["Bruno Abrantes"]
-  spec.email         = ["babrantes@babbel.com"]
+  spec.authors       = ["Bruno Abrantes", "Laurens Nienhaus", "Henning Staib", "Tim Koch-Grünberg"]
+  spec.email         = ["babrantes@babbel.com", "lnienhaus@babbel.com", "hstaib@babbel.com", "tkochgruenberg@babbel.com"]
   spec.summary       = "Orchestrates several Docker-based applications into one."
   spec.homepage      = "https://github.com/lessonnine/dockmeister.gem"
 
