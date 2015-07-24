@@ -6,6 +6,7 @@ require 'dockmeister/version'
 Gem::Specification.new do |spec|
   spec.name          = "dockmeister"
   spec.version       = Dockmeister::VERSION
+  spec.license       = "MIT"
   spec.authors       = ["Bruno Abrantes"]
   spec.email         = ["babrantes@babbel.com"]
   spec.summary       = "Orchestrates several Docker-based applications into one."

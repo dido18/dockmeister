@@ -1,5 +1,3 @@
-[![Build Status](https://magnum.travis-ci.com/lessonnine/content.graph.service.svg?token=iwUynGADzEe6seBzYCsF&branch=master)](https://magnum.travis-ci.com/lessonnine/content.graph.service)
-
 # Dockmeister
 
 Orchestrates several `docker-compose`-based services into one.
@@ -70,3 +68,7 @@ All extra arguments and flags are passed down to the `docker-compose up` command
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+## License
+
+Dockmeister is released under the [MIT License](http://www.opensource.org/licenses/MIT).
