@@ -70,7 +70,9 @@ describe Dockmeister::ScriptRunner do
       let(:script) { './scripts/post' }
 
       it 'does not exit' do
-        expect { subject }.to_not raise_error
+        Mute::IO.capture_stdout do
+          expect { subject }.to_not raise_error
+        end
       end
 
     end
@@ -81,7 +83,9 @@ describe Dockmeister::ScriptRunner do
       let(:script) { './scripts/post' }
 
       it "exits" do
-        expect { subject }.to raise_error(SystemExit)
+        Mute::IO.capture_stdout do
+          expect { subject }.to raise_error(SystemExit)
+        end
       end
 
     end
@@ -102,7 +106,9 @@ describe Dockmeister::ScriptRunner do
 
       it "populates the DOCKER_COMPOSE_FILE env var" do
         expect(Kernel).to receive(:system).with(env_vars, anything, anything) { true }
-        subject
+        Mute::IO.capture_stdout do
+          subject
+        end
       end
 
     end
