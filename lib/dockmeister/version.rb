@@ -1,11 +1,15 @@
 module Dockmeister
-  VERSION = File.read(File.expand_path('../../../.version', __FILE__)).strip.freeze
+
+  VERSION = ::Dockmeister::Version::STRING
 
   module Version
-    version = VERSION.to_s.split(".").map { |i| i.to_i }
-    MAJOR = version[0]
-    MINOR = version[1]
-    PATCH = version[2]
-    STRING = "#{MAJOR}.#{MINOR}.#{PATCH}"
+
+    MAJOR = 0
+    MINOR = 4
+    TINY  = 1
+
+    STRING = [MAJOR, MINOR, TINY].join('.')
+
   end
+
 end
