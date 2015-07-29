@@ -1,29 +1,29 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Dockmeister::ServiceConfig do
 
-  describe '#config' do
+  describe "#config" do
 
     subject { Dockmeister::ServiceConfig.new(base_path, service).config }
 
-    let(:base_path) { '.' }
-    let(:service)   { 'foo' }
+    let(:base_path) { "." }
+    let(:service)   { "foo" }
     let(:foo_configuration) do
       {
-        'fooservice' => {
-          'build' => './service/',
-          'ports' => [
-            '8080'
+        "fooservice" => {
+          "build" => "./service/",
+          "ports" => [
+            "8080"
           ],
-          'volumes' => [
-            './service/foo:/root/worker',
-            '~/service/foo:/root/worker'
+          "volumes" => [
+            "./service/foo:/root/worker",
+            "~/service/foo:/root/worker"
           ]
         },
-        'fooredis' => {
-          'build' => './redis/',
-          'ports' => [
-            '6379:6379'
+        "fooredis" => {
+          "build" => "./redis/",
+          "ports" => [
+            "6379:6379"
           ]
         }
       }
@@ -34,19 +34,19 @@ describe Dockmeister::ServiceConfig do
     end
 
     it 'replaces path references for "build" keys' do
-      build_values = subject.map { |service, config| config['build'] }.compact
+      build_values = subject.map { |service, config| config["build"] }.compact
 
-      expect(build_values).to eq(['./foo/service/', './foo/redis/'])
+      expect(build_values).to eq(["./foo/service/", "./foo/redis/"])
     end
 
     it 'replaces path references for "volumes" keys' do
-      volumes_values = subject.map { |service, config| config['volumes'] }.compact
+      volumes_values = subject.map { |service, config| config["volumes"] }.compact
 
-      expect(volumes_values).to eq([['./foo/service/foo:/root/worker', '~/service/foo:/root/worker']])
+      expect(volumes_values).to eq([["./foo/service/foo:/root/worker", "~/service/foo:/root/worker"]])
     end
 
     it 'does not replace paths that do not start with "."' do
-      ignored_volumes = subject.flat_map { |service, config| config['volumes'] }
+      ignored_volumes = subject.flat_map { |service, config| config["volumes"] }
         .compact
         .select { |volume| volume.chars.first != "." }
 

@@ -2,17 +2,17 @@ module Dockmeister
 
   class Cli
 
-    DOCKMEISTER_CONFIGURATION_FILE = 'dockmeister.yml'
-    DOCKER_COMPOSE_FILENAME = 'docker-compose.yml'
+    DOCKMEISTER_CONFIGURATION_FILE = "dockmeister.yml"
+    DOCKER_COMPOSE_FILENAME = "docker-compose.yml"
 
     def initialize(base_path)
       @base_path = base_path
-      @services = load_config['services']
+      @services = load_config["services"]
     end
 
     def compose(*options)
       composed = Dockmeister::Composer.new(@base_path, @services).compose
-      File.open(compose_file_path, 'w') { |f| f.write(composed.to_yaml) }
+      File.open(compose_file_path, "w") { |f| f.write(composed.to_yaml) }
     end
 
     def build(*options)
@@ -20,8 +20,8 @@ module Dockmeister
 
       Dockmeister::ScriptRunner.new(@base_path, @services).pre_build!
 
-      unless Kernel.system(command_with_options('build', options))
-        puts 'Failed to build the Docker containers.'
+      unless Kernel.system(command_with_options("build", options))
+        puts "Failed to build the Docker containers."
         exit 1
       end
 
@@ -29,7 +29,7 @@ module Dockmeister
     end
 
     def up(*options)
-      Kernel.exec(command_with_options('up', options))
+      Kernel.exec(command_with_options("up", options))
     end
 
     def compose_command
@@ -43,21 +43,21 @@ module Dockmeister
       end
 
       def command_with_options(command, options)
-        "#{compose_command} #{command} #{options.join(' ')}".strip
+        "#{compose_command} #{command} #{options.join(" ")}".strip
       end
 
       def load_config
         file = File.join(@base_path, DOCKMEISTER_CONFIGURATION_FILE)
 
         unless File.exists?(file)
-          puts 'Missing dockmeister.yml configuration file'
+          puts "Missing dockmeister.yml configuration file"
           exit 1
         end
 
         config = ::YAML.load_file(file)
 
         unless config
-          puts 'Invalid dockmeister.yml configuration file'
+          puts "Invalid dockmeister.yml configuration file"
           exit 1
         end
 

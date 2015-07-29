@@ -1,19 +1,19 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Dockmeister::ScriptRunner do
 
   let(:script_runner) { Dockmeister::ScriptRunner.new(base_path, services) }
-  let(:base_path)     { File.join('.', 'spec', 'fixtures') }
-  let(:services)      { ['foo', 'bar'] }
+  let(:base_path)     { File.join(".", "spec", "fixtures") }
+  let(:services)      { ["foo", "bar"] }
 
-  describe '#pre_build!' do
+  describe "#pre_build!" do
 
     subject { script_runner.pre_build! }
 
     let(:pre_build_scripts) do
       {
-        'foo' => [ 'pre' ],
-        'bar' => [ 'pre-a.sh', 'pre-b.rb' ]
+        "foo" => [ "pre" ],
+        "bar" => [ "pre-a.sh", "pre-b.rb" ]
       }
     end
 
@@ -31,14 +31,14 @@ describe Dockmeister::ScriptRunner do
 
   end
 
-  describe '#post_build!' do
+  describe "#post_build!" do
 
     subject { script_runner.post_build! }
 
     let(:post_build_scripts) do
       {
-        'foo' => [ 'post' ],
-        'bar' => [ 'post-a.sh', 'post-b.rb' ]
+        "foo" => [ "post" ],
+        "bar" => [ "post-a.sh", "post-b.rb" ]
       }
     end
 
@@ -56,7 +56,7 @@ describe Dockmeister::ScriptRunner do
 
   end
 
-  describe '#run_script' do
+  describe "#run_script" do
 
     subject { script_runner.run_script(File.join(base_path, service, script)) }
 
@@ -64,12 +64,12 @@ describe Dockmeister::ScriptRunner do
       allow(STDERR).to receive(:puts)
     end
 
-    context 'for a successful script' do
+    context "for a successful script" do
 
-      let(:service) { 'foo' }
-      let(:script) { './scripts/post' }
+      let(:service) { "foo" }
+      let(:script) { "./scripts/post" }
 
-      it 'does not exit' do
+      it "does not exit" do
         Mute::IO.capture_stdout do
           expect { subject }.to_not raise_error
         end
@@ -77,10 +77,10 @@ describe Dockmeister::ScriptRunner do
 
     end
 
-    context 'for a broken script' do
+    context "for a broken script" do
 
-      let(:service) { 'broken_service' }
-      let(:script) { './scripts/post' }
+      let(:service) { "broken_service" }
+      let(:script) { "./scripts/post" }
 
       it "exits" do
         Mute::IO.capture_stdout do
@@ -90,13 +90,13 @@ describe Dockmeister::ScriptRunner do
 
     end
 
-    context 'environment variables' do
+    context "environment variables" do
 
-      let(:service) { 'foo' }
-      let(:script) { './scripts/post' }
+      let(:service) { "foo" }
+      let(:script) { "./scripts/post" }
       let(:env_vars) do
         {
-          'DOCKMEISTER_COMPOSE_FILE' => 'docker-compose.yml'
+          "DOCKMEISTER_COMPOSE_FILE" => "docker-compose.yml"
         }
       end
 

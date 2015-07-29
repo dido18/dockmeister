@@ -1,3 +1,3 @@
-require 'dockmeister'
-require 'pry'
-require 'mute'
+require "dockmeister"
+require "pry"
+require "mute"

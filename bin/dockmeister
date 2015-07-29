@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
-$:.unshift(File.dirname('../lib'))
+$:.unshift(File.dirname("../lib"))
 
-require 'dockmeister'
+require "dockmeister"
 
-COMMANDS = ['compose', 'build', 'up']
+COMMANDS = ["compose", "build", "up"]
 
 command = ARGV.first
 options = ARGV.slice(1..-1)
 
 if COMMANDS.include?(command)
-  Dockmeister::Cli.new('.').public_send(command, options)
+  Dockmeister::Cli.new(".").public_send(command, options)
 else
   puts <<-eos
     USAGE

@@ -2,7 +2,7 @@ module Dockmeister
 
   class ServiceConfig
 
-    DOCKER_COMPOSE_FILENAME = 'docker-compose.yml'
+    DOCKER_COMPOSE_FILENAME = "docker-compose.yml"
 
     attr_reader :config
 
@@ -20,12 +20,12 @@ module Dockmeister
 
       def convert(config)
         config.values.each do |value|
-          if value['build']
-            value['build'] = adjust_relative_path(@service, value['build'])
+          if value["build"]
+            value["build"] = adjust_relative_path(@service, value["build"])
           end
 
-          if value['volumes']
-            value['volumes'] = value['volumes'].map do |volume|
+          if value["volumes"]
+            value["volumes"] = value["volumes"].map do |volume|
               adjust_relative_path(@service, volume)
             end
           end
