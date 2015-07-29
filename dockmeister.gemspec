@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.platform      = Gem::Platform::RUBY
   spec.license       = "MIT"
   spec.authors       = ["Bruno Abrantes", "Laurens Nienhaus", "Henning Staib", "Tim Koch-Grünberg"]
-  spec.email         = ["babrantes@babbel.com", "lnienhaus@babbel.com", "hstaib@babbel.com", "tkochgruenberg@babbel.com"]
+  spec.email         = ["babrantes@babbel.com", "hstaib@babbel.com", "tkochgruenberg@babbel.com"]
   spec.description   = "Orchestrates several Docker-based applications into one."
   spec.summary       = "Orchestrates several Docker-based applications into one."
   spec.homepage      = "https://github.com/babbel/dockmeister.gem"
