@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/babbel/dockmeister.svg)](https://travis-ci.org/babbel/dockmeister)
+[![Code Climate](https://codeclimate.com/github/babbel/dockmeister/badges/gpa.svg)](https://codeclimate.com/github/babbel/dockmeister)
+
 # Dockmeister
 
 Orchestrates several `docker-compose`-based services into one.
