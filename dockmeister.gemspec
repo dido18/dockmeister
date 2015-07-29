@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["babrantes@babbel.com", "hstaib@babbel.com"]
   spec.description   = "Orchestrates several Docker-based applications into one."
   spec.summary       = "Orchestrates several Docker-based applications into one."
-  spec.homepage      = "https://github.com/babbel/dockmeister.gem"
+  spec.homepage      = "https://github.com/babbel/dockmeister"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
