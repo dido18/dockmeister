@@ -11,6 +11,12 @@ In addition, Dockmeister allows you to specify scripts that are executed before 
 
 ## Usage
 
+Install docker-compose
+
+````
+brew install docker-compose
+````
+
 Create a `dockmeister.yml` file at the root level of where your services reside. This file will contain the names of all the services you wish to bootstrap:
 
 ```yaml
